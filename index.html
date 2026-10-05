@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMSIU Care Prototype</title>
+<meta name="description" content="Clickable prototype of IMSIU Care, a clinic appointment booking app designed for Imam Mohammad Ibn Saud Islamic University students.">
+<style>
+  :root {
+    --bg: #f4f7f7;
+    --card: #ffffff;
+    --ink: #17323a;
+    --muted: #5b6f74;
+    --accent: #1f7a78;
+    --accent-soft: #d9efed;
+    --pink: #d9468f;
+    --line: #dde6e6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 16px 56px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 48px;
+    align-items: start;
+  }
+  .eyebrow {
+    font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 8px;
+  }
+  h1 { font-size: 40px; line-height: 1.1; margin: 0 0 12px; }
+  .lead { font-size: 18px; color: var(--muted); margin: 0 0 28px; max-width: 34em; }
+  h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .steps li {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 14px; display: flex; gap: 12px; align-items: baseline;
+  }
+  .steps b { color: var(--accent); min-width: 1.4em; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px;
+  }
+  .stat strong { display: block; font-size: 26px; color: var(--accent); }
+  .stat span { font-size: 13px; color: var(--muted); }
+  .redesign { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 4px; }
+  .redesign figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px; text-align: center; }
+  .redesign img { width: 100%; max-width: 170px; height: auto; }
+  .redesign figcaption { font-size: 13px; color: var(--muted); }
+  .note { font-size: 14px; color: var(--muted); margin-top: 22px; }
+
+  /* Phone */
+  .phone-col { position: sticky; top: 24px; }
+  .phone {
+    position: relative; width: 100%; max-width: 340px; margin: 0 auto;
+    background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 14px;
+    box-shadow: 0 12px 30px rgba(23, 50, 58, .08);
+  }
+  .screen { display: none; position: relative; }
+  .screen.active { display: block; }
+  .screen img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+  .hot {
+    position: absolute; border: 0; padding: 0; margin: 0; cursor: pointer;
+    background: transparent; border-radius: 12px;
+    transition: background .2s, box-shadow .2s;
+  }
+  .hot:focus-visible { outline: 3px solid var(--accent); }
+  .show-hot .hot, .flash .hot {
+    background: rgba(31, 122, 120, .22);
+    box-shadow: 0 0 0 2px rgba(31, 122, 120, .7);
+  }
+  .review-input {
+    position: absolute; resize: none; border: 0; border-radius: 10px;
+    background: rgba(255,255,255,.85); color: var(--ink);
+    font: 13px/1.4 system-ui, sans-serif; padding: 8px;
+  }
+  .toast {
+    position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%);
+    background: var(--ink); color: #fff; padding: 14px 20px; border-radius: 12px;
+    font-weight: 600; text-align: center; opacity: 0; pointer-events: none; transition: opacity .25s;
+    width: 70%;
+  }
+  .toast.show { opacity: 1; }
+  .controls { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .controls button {
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: 999px; padding: 8px 14px; font: inherit; font-size: 14px; cursor: pointer;
+  }
+  .controls button[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .where { text-align: center; font-size: 14px; color: var(--muted); margin-top: 8px; }
+
+  @media (max-width: 860px) {
+    .wrap { grid-template-columns: 1fr; gap: 28px; padding-top: 24px; }
+    .phone-col { position: static; order: -1; }
+    h1 { font-size: 32px; }
+  }
+  @media (max-width: 420px) {
+    .stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section>
+    <p class="eyebrow">UX / HCI Project · Clickable Prototype</p>
+    <h1>IMSIU Care</h1>
+    <p class="lead">A mobile app that helps Imam Mohammad Ibn Saud Islamic University students book campus clinic appointments in a few taps, without waiting in line or calling the clinic.</p>
+
+    <h2>Design process</h2>
+    <ol class="steps">
+      <li><b>1</b><span>User research and personas (students, faculty, clinic staff)</span></li>
+      <li><b>2</b><span>Task analysis and scenarios for booking an appointment</span></li>
+      <li><b>3</b><span>Studied similar apps, then defined functional and non-functional requirements</span></li>
+      <li><b>4</b><span>Paper sketches, then a high-fidelity prototype</span></li>
+      <li><b>5</b><span>Evaluation with a student questionnaire, then a redesign</span></li>
+    </ol>
+
+    <h2>Evaluation results</h2>
+    <div class="stats">
+      <div class="stat"><strong>4.8/5</strong><span>Easy to navigate the app</span></div>
+      <div class="stat"><strong>4.7/5</strong><span>More comfortable managing health needs</span></div>
+      <div class="stat"><strong>3.4/5</strong><span>Easy to find the clinic, so we redesigned</span></div>
+    </div>
+
+    <h2>Redesign based on feedback</h2>
+    <div class="redesign">
+      <figure>
+        <img src="screens/confirmed-before.jpg" alt="Confirmation screen before the redesign" loading="lazy">
+        <figcaption>Before: no directions after booking</figcaption>
+      </figure>
+      <figure>
+        <img src="screens/confirmed.jpg" alt="Confirmation screen after the redesign, showing the clinic location" loading="lazy">
+        <figcaption>After: clinic location shown after booking</figcaption>
+      </figure>
+    </div>
+
+    <p class="note">Try it: sign in, open a clinic section, book an appointment, then leave a review. Tap anywhere on the phone to see what is clickable. This is a design prototype, so no real data is saved.</p>
+  </section>
+
+  <section class="phone-col" aria-label="Interactive prototype">
+    <div class="phone" id="phone">
+
+      <div class="screen active" data-screen="signin" data-title="Sign in">
+        <img src="screens/signin.jpg" alt="Sign in screen">
+        <button class="hot" style="left:20%;top:63%;width:50%;height:8%" data-go="home" aria-label="Log in"></button>
+        <button class="hot" style="left:40%;top:71%;width:20%;height:5%" data-go="signup" aria-label="Sign up"></button>
+      </div>
+
+      <div class="screen" data-screen="signup" data-title="Sign up">
+        <img src="screens/signup.jpg" alt="Sign up screen">
+        <button class="hot" style="left:16%;top:79%;width:64%;height:8%" data-go="signin" data-toast="Account created" aria-label="Save"></button>
+      </div>
+
+      <div class="screen" data-screen="home" data-title="Home">
+        <img src="screens/home.jpg" alt="Home screen with clinic sections">
+        <button class="hot" style="left:14%;top:38%;width:25%;height:16%" data-go="booking" aria-label="Skin clinic"></button>
+        <button class="hot" style="left:44%;top:38%;width:25%;height:16%" data-go="booking" aria-label="Dental clinic"></button>
+        <button class="hot" style="left:14%;top:54%;width:25%;height:15%" data-go="booking" aria-label="Tests"></button>
+        <button class="hot" style="left:44%;top:54%;width:25%;height:15%" data-go="booking" aria-label="Heart clinic"></button>
+        <button class="hot" style="left:18%;top:75%;width:52%;height:6%" data-go="booking" aria-label="New booking"></button>
+        <button class="hot" style="left:14%;top:85%;width:12%;height:7%" data-go="signin" data-toast="Signed out" aria-label="Profile"></button>
+      </div>
+
+      <div class="screen" data-screen="booking" data-title="Book an appointment">
+        <img src="screens/booking.jpg" alt="Book an appointment screen">
+        <button class="hot" style="left:28%;top:76%;width:46%;height:8%" data-go="confirmed" aria-label="Booking"></button>
+        <button class="hot" style="left:70%;top:86%;width:15%;height:9%" data-go="home" aria-label="Home"></button>
+      </div>
+
+      <div class="screen" data-screen="confirmed" data-title="Appointment confirmed">
+        <img src="screens/confirmed.jpg" alt="Appointment confirmed screen with clinic location">
+        <button class="hot" style="left:20%;top:70%;width:54%;height:8%" data-go="reviews" aria-label="Reviews"></button>
+        <button class="hot" style="left:71%;top:84%;width:15%;height:9%" data-go="home" aria-label="Home"></button>
+      </div>
+
+      <div class="screen" data-screen="reviews" data-title="Reviews">
+        <img src="screens/reviews.jpg" alt="Reviews screen">
+        <textarea class="review-input" style="left:7%;top:74%;width:79%;height:8%" placeholder="Type your review..." aria-label="Your review"></textarea>
+        <button class="hot" style="left:16%;top:86%;width:64%;height:7%" data-go="home" data-toast="Thank you for your review!" aria-label="Save review"></button>
+      </div>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <p class="where" id="where">Screen: Sign in</p>
+    <div class="controls">
+      <button type="button" id="toggleHot" aria-pressed="false">Show clickable areas</button>
+      <button type="button" id="restart">Restart</button>
+    </div>
+  </section>
+</main>
+
+<script>
+  const phone = document.getElementById('phone');
+  const toast = document.getElementById('toast');
+  const where = document.getElementById('where');
+
+  function go(name) {
+    document.querySelectorAll('.screen').forEach(s => {
+      const on = s.dataset.screen === name;
+      s.classList.toggle('active', on);
+      if (on) where.textContent = 'Screen: ' + s.dataset.title;
+    });
+  }
+
+  function showToast(text) {
+    toast.textContent = text;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1400);
+  }
+
+  phone.addEventListener('click', (e) => {
+    const hot = e.target.closest('.hot');
+    if (hot) {
+      if (hot.dataset.toast) showToast(hot.dataset.toast);
+      go(hot.dataset.go);
+      return;
+    }
+    if (e.target.closest('textarea')) return;
+    // Like Figma: tapping elsewhere briefly highlights what is clickable
+    phone.classList.add('flash');
+    setTimeout(() => phone.classList.remove('flash'), 700);
+  });
+
+  document.getElementById('toggleHot').addEventListener('click', (e) => {
+    const on = phone.classList.toggle('show-hot');
+    e.currentTarget.setAttribute('aria-pressed', String(on));
+  });
+
+  document.getElementById('restart').addEventListener('click', () => {
+    document.querySelector('.review-input').value = '';
+    go('signin');
+  });
+</script>
+</body>
+</html>
