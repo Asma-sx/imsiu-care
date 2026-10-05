@@ -13,5 +13,3 @@ User research and personas → task analysis and scenarios → requirements → 
 - 3.4/5: finding the clinic was hard, so the confirmation screen was redesigned to show the clinic location
 
 Open `index.html` in a browser, or view it on GitHub Pages.
-
-Team: Asma Alyahya, Layan Alotaibi, Norah Almousa, Aljoharah Almthen, Noura Aljandol
