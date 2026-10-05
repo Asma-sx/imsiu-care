@@ -2,7 +2,6 @@
 
 A clickable prototype of a mobile app that lets Imam Mohammad Ibn Saud Islamic University students book campus clinic appointments.
 
-Built for the IT300 (Human-Computer Interaction) course.
 
 ## Design process
 User research and personas → task analysis and scenarios → requirements → paper sketches → high-fidelity prototype → questionnaire evaluation → redesign.
