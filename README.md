@@ -1,7 +1,6 @@
 # IMSIU Care
 
-A clickable prototype of a mobile app that lets Imam Mohammad Ibn Saud Islamic University students book campus clinic appointments.
-
+UI design of a mobile app that lets Imam Mohammad Ibn Saud Islamic University students book campus clinic appointments.
 
 ## Design process
 User research and personas → task analysis and scenarios → requirements → paper sketches → high-fidelity prototype → questionnaire evaluation → redesign.
